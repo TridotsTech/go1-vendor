@@ -162,7 +162,7 @@ export default {
     const router = useRouter()
  
     const openCreate = () => {
-      router.push({ name: ' New Addresses' })
+      router.push({ name: 'New Addresses' })
     }
  
     const OpenClick = (row) => {

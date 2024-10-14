@@ -24,10 +24,11 @@
         </Button>
       </Dropdown>
       <span class="ml-1 mr-0.5 text-base text-gray-500" aria-hidden="true">
-        /
+        
       </span>
     </template>
     <div
+    
       class="flex min-w-0 items-center overflow-hidden text-ellipsis whitespace-nowrap"
     >
       <template v-for="(item, i) in crumbs" :key="item.label">

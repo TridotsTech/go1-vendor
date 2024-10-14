@@ -4,9 +4,9 @@
   "version": "0.0.0",
   "scripts": {
     "dev": "vite",
-    "build": "vite build --base=/assets/go1_customer/frontend/ && yarn copy-html-entry",
+    "build": "vite build --base=/assets/go1_vendor/frontend/ && yarn copy-html-entry",
     "preview": "vite preview",
-    "copy-html-entry": "cp ../go1_customer/public/frontend/index.html ../go1_customer/www/frontend.html"
+    "copy-html-entry": "cp ../go1_vendor/public/frontend/index.html ../go1_vendor/www/go1_vendor.html"
   },
   "dependencies": {
     "chart.js": "^4.4.4",
@@ -24,3 +24,4 @@
     "vite": "^5.4.8"
   }
 }
+

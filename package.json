@@ -1,13 +1,13 @@
 {
-  "name": "go1_customer",
+  "name": "go1_vendor",
   "version": "1.0.0",
-  "description": "Go1 Customer App",
+  "description": "Go1 Vendor App",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "postinstall": "cd dashboard && yarn install",
-    "dev": "cd dashboard && yarn dev",
-    "build": "cd dashboard && yarn build"
+    "postinstall": "cd frontend && yarn install",
+    "dev": "cd frontend && yarn dev",
+    "build": "cd frontend && yarn build"
   },
   "keywords": [],
   "author": "",

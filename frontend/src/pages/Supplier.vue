@@ -26,7 +26,7 @@
           
         </div>
         <div :class="['layout', { collapsed: isSidebarCollapsed }]">
-          <LeftSidebar :isCollapsed="isSidebarCollapsed" @toggle="toggleSidebar" />
+          <LeftSidebar  class="z-[8]" :isCollapsed="isSidebarCollapsed" @toggle="toggleSidebar" />
           <div class="main-content" v-if="columns_data && supplier_detail.data" >
             <ListView
               class="h-[485px]"

@@ -25,7 +25,7 @@ const routes = [
   },
   {
     name: 'Supplier Detail',
-    path: '/Supplier Detail/:id',
+    path: '/Supplier-Detail/:id',
     component: () => import('@/pages/Supplier Detail.vue'),
   },
   {
@@ -35,7 +35,7 @@ const routes = [
   },
   {
     name: 'Purchase Invoice Detail',
-    path: '/Purchase Invoice Detail/:id',
+    path: '/Purchase-Invoice-Detail/:id',
     component: () => import('@/pages/Purchase Invoice Detail.vue'),
   },
     {
@@ -49,12 +49,12 @@ const routes = [
       component:() => import ('@/pages/Purchase.vue')
     },
     {
-      path: '/Purchase Detail/:id',
+      path: '/Purchase-Detail/:id',
       name:'Purchase Detail',
       component:() => import ('@/pages/Purchase Detail.vue')
     },
     {
-      path: '/Request Quotation Details/:id',
+      path: '/Request-Quotation-Details/:id',
       name:'Request Quotation Details',
       component:() => import ('@/pages/Request Quotation Details.vue')
     },
@@ -69,7 +69,7 @@ const routes = [
       component:() => import ('@/pages/Issues.vue')
     },
     {
-      path: '/Issues Detail/:id',
+      path: '/Issues-Detail/:id',
       name:'Issues Detail',
       component:() => import ('@/pages/Issues Detail.vue')
     },
@@ -79,12 +79,12 @@ const routes = [
       component:() => import ('@/pages/Addresses.vue')
     },
     {
-      path: '/Addresses Detail/:id',
+      path: '/Addresses-Detail/:id',
       name:'Addresses Detail',
       component:() => import ('@/pages/Addresses Detail.vue')
     },
     {
-      path: '/New Addresses',
+      path: '/New-Addresses',
       name:'New Addresses',
       component:() => import ('@/pages/New Addresses.vue')
     },
@@ -96,7 +96,7 @@ const routes = [
 ]
 
 let router = createRouter({
-  history: createWebHistory('/Go1Vendor'),
+  history: createWebHistory('/go1_vendor'),
   routes,
 })
 

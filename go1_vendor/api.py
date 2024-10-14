@@ -347,4 +347,41 @@ def get_address():
             if link['link_name'] in my_data:
                 address_data.append(address)
  
-    return address_list
+    return address_data if my_data else address_list
+
+@frappe.whitelist()
+def get_test():
+    user_check=get_userid()
+    if user_check!="administrator":
+        filters={'user': user_check}
+        supplier = frappe.db.get_all("Portal User", filters=filters, fields=['parent'])
+    
+    return supplier[0].parent if supplier else ''
+
+
+@frappe.whitelist()
+def get_address():
+    
+    my_data = get_test() 
+    
+    address_list = []   
+    addresses = frappe.db.get_all("Address", fields=['*'])
+ 
+    for address in addresses:
+        if my_data:
+            filters = {'parent':address['name']}
+        else:
+            filters = {'link_doctype': 'Supplier'}    
+       
+        links = frappe.db.get_all("Dynamic Link", fields=['*'], filters=filters)
+        address['links'] = links
+        address_list.append(address)
+ 
+    address_data = []
+    for address in address_list:
+        for link in address['links']:
+            if link['link_name'] in my_data:
+                address_data.append(address)
+ 
+    return address_data if my_data else address_list
+

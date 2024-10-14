@@ -247,7 +247,6 @@ export default {
                     },
                     ticks: {
                         beginAtZero: true,
-                        stepSize: 5e5,
                         callback: function (value) {
                             if (value === 0) return '0';
                             if (value >= 1e7) return `${value / 1e7} Cr`;
@@ -263,10 +262,11 @@ export default {
                         lineWidth: 1,
                     },
                     suggestedMin: 0,
+
                 },
             },
         };
-        
+
         const fetchMonthlyGrandTotal = async () => {
             try {
                 const response = await fetch('/api/method/go1_vendor.sales.get_monthly_grand_total');
@@ -278,25 +278,26 @@ export default {
                     const maxGrandTotal = Math.max(...grandTotals);
                     let yAxisMaxValue, yAxisUnit, yAxisStepSize;
 
-                    if (maxGrandTotal >= 1e7) { 
+                    if (maxGrandTotal >= 1e7) {
                         yAxisUnit = 'Cr';
                         yAxisMaxValue = Math.ceil(maxGrandTotal / 1e7) * 1e7;
                         yAxisStepSize = 5e6;
-                    } else if (maxGrandTotal >= 1e5) { 
+                    } else if (maxGrandTotal >= 1e5) {
                         yAxisUnit = 'L';
                         yAxisMaxValue = Math.ceil(maxGrandTotal / 1e5) * 1e5;
                         yAxisStepSize = 5e5;
-                    } else if (maxGrandTotal >= 1e3) { 
+                    } else if (maxGrandTotal >= 1e3) {
                         yAxisUnit = 'k';
                         yAxisMaxValue = Math.ceil(maxGrandTotal / 1e3) * 1e3;
-                        yAxisStepSize = Math.ceil(yAxisMaxValue / 5);
-                    } else { 
+                        yAxisStepSize = 5e3;
+
+                    } else {
                         yAxisUnit = '';
                         yAxisMaxValue = Math.ceil(maxGrandTotal);
                         yAxisStepSize = Math.ceil(yAxisMaxValue / 5);
                     }
 
-                   
+
                     lineChartData.value = {
                         ...lineChartData.value,
                         labels,
@@ -308,12 +309,11 @@ export default {
                         ],
                     };
 
-                 
+
                     lineChartOptions.scales.y.suggestedMax = yAxisMaxValue;
+                    lineChartOptions.scales.y.ticks.stepSize = yAxisStepSize;
                     lineChartOptions.scales.y.ticks.callback = (value) => {
                         if (value === 0) return '0';
-
-                    
                         switch (yAxisUnit) {
                             case 'Cr':
                                 return `${value / 1e7} ${yAxisUnit}`;
@@ -325,7 +325,7 @@ export default {
                                 return value.toString();
                         }
                     };
-                    lineChartOptions.scales.y.ticks.stepSize = yAxisStepSize;
+
                 } else {
                     console.error('Unexpected response:', data);
                 }
@@ -392,10 +392,10 @@ export default {
                 const response = await fetch('/api/method/go1_vendor.sales.get_top_sold_items');
                 const data = await response.json();
 
-              
+
                 if (data.message && data.message.message && Array.isArray(data.message.message.items)) {
                     const items = data.message.message.items;
-              
+
 
                     topSoldItemsChartData.value = {
                         ...topSoldItemsChartData.value,

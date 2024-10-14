@@ -7,29 +7,12 @@
           @click="togglePopover" 
           :class="['flex h-12 items-center rounded-md py-2 duration-300 ease-in-out w-52 px-2 hover:bg-gray-200', { 'active': isPopoverActive }]">
           <template v-if="isCollapsed">
-            <!-- <Avatar
-              class="flex-shrink-0 rounded"
-              :shape="'square'"
-              image="http://192.168.0.156:8081/files/G0-1-Vendor%20portal.png"
-              label="H"
-              size="18"
-            /> -->
-            <!-- <img :src="logo" width="40px"  class=" mr-2"> -->
-            <Avatar :shape="'square'" image="/G0-1-Vendor portal.png" label="EY" size="xl" />
+            <Avatar :shape="'square'" image="/assets/go1_vendor/image/logo.svg" label="EY" size="xl" />
           </template>
           <template v-else>
             <div style="">
               <div class="flex-shrink-0 text-sm duration-300 ease-in-out mr-2 ml-0 w-auto opacity-100 " style="float:left;">
-                <!-- <Avatar
-                  class="size-8 flex-shrink-0 rounded"
-                  :shape="'square'"
-                  image="http://192.168.0.156:8081/files/G0-1-Vendor%20portal.png"
-                  label="H"
-                  size="xl"
-                  style="margin-left:-61px"
-                /> -->
-              <!-- <img :src="logo" width="40px"  class="h-10 mr-2"> -->
-              <Avatar :shape="'square'" image="/G0-1-Vendor portal.png" label="EY" size="2xl" class="mr-2" />
+              <Avatar :shape="'square'" image="/assets/go1_vendor/image/logo.svg" label="EY" size="2xl" class="mr-2" />
               </div>
               <div class="flex flex-1 flex-col text-left duration-300 ease-in-out ml-2 w-auto opacity-100" style="float:left;margin-top:-2px">
                 <p class="font-medium mt-2" style="margin-left:-15px">Go1 Vendor</p>
@@ -147,17 +130,6 @@ export default {
     cache: ['route','title'],
     auto: true 
   }); 
-
-  //  Vendor_logo= createResource({
-  //   url: 'go1_vendor.sales.get_navbar_logo',
-  //   cache: ['route','title'],
-  //   auto: true
-  // }); 
-  // Vendor_logo.fetch().then((res) =>{
-  //      console.log("gfhj",res)
-  // })
-
-
 
  const Vendorlogo = async () => {
         const response = await fetch('/api/method/go1_vendor.sales.get_navbar_logo');

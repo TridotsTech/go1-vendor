@@ -24,7 +24,7 @@ issues.vue
         </header>
       </div>
     </div>
-    <LeftSidebar :isCollapsed="isSidebarCollapsed" @toggle="toggleSidebar" />
+    <LeftSidebar   class="z-[8]" :isCollapsed="isSidebarCollapsed" @toggle="toggleSidebar" />
     <div :class=" ['layout', { collapsed: isSidebarCollapsed }]" class>
       <div class="main-content ">
  

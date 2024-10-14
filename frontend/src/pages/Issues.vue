@@ -194,7 +194,7 @@
  
       const optionsCustomer = async () => {
         try {
-          const response = await fetch('/api/resource/Customer?fields=["name"]');
+          const response = await fetch('/api/resource/Supplier?fields=["name"]');
           if (!response.ok) throw new Error('Network response was not ok');
  
           const customerdata = await response.json();

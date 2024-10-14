@@ -11,15 +11,15 @@ app_license = "mit"
 # required_apps = []
 
 # Each item in the list will be shown as an app in the apps page
-# add_to_apps_screen = [
-# 	{
-# 		"name": "go1_vendor",
-# 		"logo": "/assets/go1_vendor/logo.png",
-# 		"title": "Go1 Vendor",
-# 		"route": "/go1_vendor",
-# 		"has_permission": "go1_vendor.api.permission.has_app_permission"
-# 	}
-# ]
+add_to_apps_screen = [
+	{
+		"name": "go1_vendor",
+		"logo": "/assets/go1_vendor/image/logo.svg",
+		"title": "Go1 Vendor",
+		"route": "/go1_vendor",
+		# "has_permission": "go1_vendor.api.permission.has_app_permission"
+	}
+]
 
 # Includes in <head>
 # ------------------
@@ -241,4 +241,10 @@ app_license = "mit"
 # default_log_clearing_doctypes = {
 # 	"Logging DocType Name": 30  # days to retain logs
 # }
+
+fixtures = [
+    {"doctype": "Go1 Navbar Settings"}
+]
+
+website_route_rules = [{'from_route': '/frontend/<path:app_path>', 'to_route': 'go1_vendor'}, {'from_route': '/frontend/<path:app_path>', 'to_route': 'go1_vendor'}, {'from_route': '/frontend/<path:app_path>', 'to_route': 'go1_vendor'}, {'from_route': '/demo/<path:app_path>', 'to_route': 'demo'}, {'from_route': '/dashboard/<path:app_path>', 'to_route': 'dashboard'},]
 
