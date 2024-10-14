@@ -246,5 +246,5 @@ fixtures = [
     {"doctype": "Go1 Navbar Settings"}
 ]
 
-website_route_rules = [{'from_route': '/frontend/<path:app_path>', 'to_route': 'go1_vendor'}, {'from_route': '/frontend/<path:app_path>', 'to_route': 'go1_vendor'}, {'from_route': '/frontend/<path:app_path>', 'to_route': 'go1_vendor'}, {'from_route': '/demo/<path:app_path>', 'to_route': 'demo'}, {'from_route': '/dashboard/<path:app_path>', 'to_route': 'dashboard'},]
+website_route_rules = [{'from_route': '/go1_vendor/<path:app_path>', 'to_route': 'go1_vendor'}, {'from_route': '/go1_vendor/<path:app_path>', 'to_route': 'go1_vendor'}, {'from_route': '/go1_vendor/<path:app_path>', 'to_route': 'go1_vendor'}, {'from_route': '/demo/<path:app_path>', 'to_route': 'demo'}, {'from_route': '/dashboard/<path:app_path>', 'to_route': 'dashboard'},]
 

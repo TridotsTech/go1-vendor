@@ -24,7 +24,7 @@
         </Button>
       </Dropdown>
       <span class="ml-1 mr-0.5 text-base text-gray-500" aria-hidden="true">
-        
+        /
       </span>
     </template>
     <div

@@ -61,7 +61,6 @@
                 <span class="font-small text-gray-700 text-base" style="max-width: 170px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; display: block;">{{ item }}</span>
               </div>
             </template>
-   
           </ListView>
           <ListFooter
           :modelValue="pageLengthCount"
