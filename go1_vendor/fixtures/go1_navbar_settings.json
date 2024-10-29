@@ -1,0 +1,89 @@
+[
+ {
+  "application_logo": null,
+  "docstatus": 0,
+  "doctype": "Go1 Navbar Settings",
+  "logo_width": null,
+  "modified": "2024-10-29 12:22:12.505084",
+  "name": "Go1 Navbar Settings",
+  "sidebar_settings": [
+   {
+    "enabled": 1,
+    "icon": "layout",
+    "parent": "Go1 Navbar Settings",
+    "parentfield": "sidebar_settings",
+    "parenttype": "Go1 Navbar Settings",
+    "reference_document": null,
+    "role": null,
+    "route": "/",
+    "title": "Dashboard"
+   },
+   {
+    "enabled": 1,
+    "icon": "book",
+    "parent": "Go1 Navbar Settings",
+    "parentfield": "sidebar_settings",
+    "parenttype": "Go1 Navbar Settings",
+    "reference_document": null,
+    "role": null,
+    "route": "/RequestQuotation",
+    "title": "RFQ"
+   },
+   {
+    "enabled": 1,
+    "icon": "book-open",
+    "parent": "Go1 Navbar Settings",
+    "parentfield": "sidebar_settings",
+    "parenttype": "Go1 Navbar Settings",
+    "reference_document": null,
+    "role": null,
+    "route": "/Supplier",
+    "title": " Quotation"
+   },
+   {
+    "enabled": 1,
+    "icon": "shopping-cart",
+    "parent": "Go1 Navbar Settings",
+    "parentfield": "sidebar_settings",
+    "parenttype": "Go1 Navbar Settings",
+    "reference_document": null,
+    "role": null,
+    "route": "/Purchase",
+    "title": "Orders"
+   },
+   {
+    "enabled": 1,
+    "icon": "file",
+    "parent": "Go1 Navbar Settings",
+    "parentfield": "sidebar_settings",
+    "parenttype": "Go1 Navbar Settings",
+    "reference_document": null,
+    "role": null,
+    "route": "/SupplierInvoice",
+    "title": "Invoice"
+   },
+   {
+    "enabled": 1,
+    "icon": "home",
+    "parent": "Go1 Navbar Settings",
+    "parentfield": "sidebar_settings",
+    "parenttype": "Go1 Navbar Settings",
+    "reference_document": null,
+    "role": null,
+    "route": "/Addresses",
+    "title": "Addresses"
+   },
+   {
+    "enabled": 1,
+    "icon": "help-circle",
+    "parent": "Go1 Navbar Settings",
+    "parentfield": "sidebar_settings",
+    "parenttype": "Go1 Navbar Settings",
+    "reference_document": null,
+    "role": null,
+    "route": "/IssuesList",
+    "title": "Ticket "
+   }
+  ]
+ }
+]

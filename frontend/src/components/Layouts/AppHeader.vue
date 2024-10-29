@@ -1,0 +1,63 @@
+<template>
+  <div class="flex h-12 border-b pr-5 px-5 items-center">
+    <div v-if="paramsvalue && Object.keys(paramsvalue).length > 0" class="flex flex-1 items-center h-12">
+     
+      <h1><span class="text-gray-600"> {{ newroute }}</span> / {{ paramsvalue.id}} </h1>
+    </div>
+    <div v-else class="flex flex-1 items-center h-12">
+      <h1>{{ matchroute }}</h1>
+    </div>
+    <slot name="createbutton" class="items-center"/>
+    <div class="flex items-center justify-center">
+      <!-- <CallUI /> -->
+    </div>
+  </div>
+</template>
+
+<script setup>
+import { watch, ref, onMounted } from 'vue';
+import { useRoute } from 'vue-router'
+
+const route = useRoute()
+const matchroute = ref("")
+const newroute=ref("")
+let paramsvalue = ref({}) 
+
+
+const route_array = route.fullPath.split("/");
+
+const updateparams = () => {
+paramsvalue.value = route.params
+paramsvalue =paramsvalue.value
+const length = route_array.length;
+
+if(length >=2){
+   newroute.value = route_array[length - 2]
+ 
+
+  } 
+}
+
+
+const updateroute = () => {
+  const length = route_array.length;
+  matchroute.value = route_array[length - 1];
+  
+}
+
+
+onMounted(() => {
+  updateparams();
+  updateroute();
+});
+
+
+watch(
+  () => route.fullPath, 
+  () => {
+    updateparams();
+    updateroute();
+   
+  }
+);
+</script>

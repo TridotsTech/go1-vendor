@@ -1,0 +1,53 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2024-09-24 16:36:15.844578",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "application_logo",
+  "logo_width",
+  "sidebar_settings"
+ ],
+ "fields": [
+  {
+   "fieldname": "application_logo",
+   "fieldtype": "Attach",
+   "label": "Application Logo"
+  },
+  {
+   "fieldname": "logo_width",
+   "fieldtype": "Data",
+   "label": "Logo width"
+  },
+  {
+   "fieldname": "sidebar_settings",
+   "fieldtype": "Table",
+   "label": "Sidebar Settings",
+   "options": "Sidebar Settings"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "issingle": 1,
+ "links": [],
+ "modified": "2024-09-24 17:14:31.072812",
+ "modified_by": "Administrator",
+ "module": "Go1 Vendor",
+ "name": "Go1 Navbar Settings",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

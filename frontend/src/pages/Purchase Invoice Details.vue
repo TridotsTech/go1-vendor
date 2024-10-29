@@ -1,0 +1,206 @@
+
+<template>
+  <div class="flex h-screen w-screen">
+    <div class="h-full border-r bg-gray-50">
+      <AppSidebar />
+    </div>
+    <div class="flex-1 flex flex-col h-full overflow-auto">
+      <AppHeader />
+      <slot />
+
+    <div class="main-content justify-items-center grid grid-cols-1 py-10">
+      <div class="grid grid-cols-1 content-start gap-3 m-2 w-8/12 bg-white border rounded-md pb-5">
+        <div class="px-3 py-3 border-b">
+          <div class="flex justify-between items-center">
+            <span class="text-xl text-cyan-600 font-semibold">{{ name }}</span>
+            <Badge :variant="'subtle'" :theme="getTheme(inputValue)" size="md" label="Badge">
+              {{ inputValue }}
+            </Badge>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 p-3">
+          <div class="mb-5 text-lg font-medium">
+            <h1> Details: </h1>
+          </div>
+          <div class="grid grid-cols-2 md:grid-cols-3 gap-3 justify-items-stretch text-gray-800">
+            <div class="flex flex-col gap-1" v-for="(detail, index) in details" :key="index">
+              <span class="text-gray-600 text-sm">{{ detail.label }}</span>
+              <span class="text-sm font-semibold" v-html="detail.value"></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1">
+          <div class="w-full">
+            <table class="w-full text-xs text-left whitespace-nowrap">
+              <colgroup>
+                <col>
+                <col>
+                <col>
+                <col>
+                <col>
+              </colgroup>
+              <thead>
+                <tr class="bg-gray-100">
+                  <th class="p-3 w-1/2 text-md font-normal">Item code</th>
+                  <th class="p-3 text-md font-normal">Quantity</th>
+                  <th class="p-3 text-md font-normal">UOM</th>
+                  <th class="p-3 text-md font-normal text-right">Rate</th>
+                  <th class="p-3 text-md font-normal text-right">Amount</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="(row, index) in itemValue" :key="index" class="border-b border-gray-200">
+                  <td class="px-3 py-2 w-1/2 text-md font-medium">{{ row.item_code }}</td>
+                  <td class="px-3 py-2 text-center text-md font-medium">{{ row.qty }}</td>
+                  <td class="px-3 py-2 text-md font-medium">{{ row.uom }}</td>
+                  <td class="px-3 py-2 text-right text-md font-medium">{{ row.rate }}</td>
+                  <td class="px-3 py-2 text-right text-md font-medium">{{ row.amount }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 p-3">
+          <div class="grid grid-cols-1 gap-8 md:grid-cols-2">
+            <div></div>
+            <div class="flex flex-col w-full gap-3">
+              <div class="flex justify-between items-center"><span class="text-gray-600 text-sm font-medium">Tax Amount</span><span class="text-sm font-medium">{{ total_taxes }}</span></div>
+              <div class="flex justify-between items-center"><span class="text-gray-600 text-sm font-medium">Total</span><span class="text-sm font-medium">{{ total }}</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1">
+          <div class="w-full">
+            <table class="w-full text-xs text-left whitespace-nowrap">
+              <colgroup>
+                <col>
+                <col>
+                <col>
+                <col>
+                <col>
+              </colgroup>
+              <thead>
+                <tr class="bg-gray-100">
+                  <th class="p-3 w-1/2 text-md font-normal">Type</th>
+                  <th class="p-3 text-md font-normal">Account Head</th>
+                  <th class="p-3 text-md font-normal">Tax Rate</th>
+                  <th class="p-3 text-md font-normal">Amount</th>
+                  <th class="p-3 text-md font-normal text-right">Total</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="(row, index) in supplierValue" :key="index" class="border-b border-gray-200">
+                  <td class="px-3 py-2 w-1/2 text-md font-medium">{{ row.charge_type }}</td>
+                  <td class="px-3 py-2 text-center text-md font-medium">{{ row.account_head }}</td>
+                  <td class="px-3 py-2 text-md font-medium">{{ row.rate }}</td>
+                  <td class="px-3 py-2 text-center text-md font-medium">{{ row.tax_amount }}</td>
+                  <td class="px-3 py-2 text-right text-md font-medium">{{ row.total }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+</template>
+
+<script setup>
+import AppSidebar from '@/components/Layouts/AppSidebar.vue';
+import AppHeader from '@/components/Layouts/AppHeader.vue';
+import { ref, onMounted, computed, reactive } from 'vue';
+import { createResource,Badge } from 'frappe-ui';
+import { useRouter, useRoute } from 'vue-router';
+
+const name = ref('');
+const datevalue = ref('');
+const company = ref('');
+const billing_details = ref('');
+const billing_address = ref('');
+const inputValue = ref('');
+const itemValue = ref([]);
+const supplierValue = ref([]);
+const total = ref('');
+const total_taxes = ref('');
+const shippingaddress = ref('');
+const supplier = ref('');
+const pocode = ref('');
+const poreference = ref('');
+const allowedcurrency = ref('');
+const sup_address_line1 = ref('');
+const field_filters=reactive({})
+
+
+const quote = createResource({
+  url: 'go1_vendor.apidata.get_purchaseinvoice',
+  params: {
+    'field_filters':JSON.stringify(field_filters)
+  }, 
+  method: 'GET',
+});
+
+const route = useRoute();
+
+const fetchQuoteDetails = async () => {
+  try {
+    const id = route.params.id;
+    const data = await quote.fetch();
+    const QuotationDetails = data.find((item) => item.name === id);
+    
+    if (QuotationDetails) {
+      allowedcurrency.value = QuotationDetails.price_list_currency;
+      itemValue.value = QuotationDetails.items || [];
+      supplierValue.value = QuotationDetails.taxes || [];
+      total.value = QuotationDetails.total;
+      name.value = QuotationDetails.name;
+      inputValue.value = QuotationDetails.status;
+      datevalue.value = QuotationDetails.posting_date;
+      company.value = QuotationDetails.company;
+      billing_details.value = QuotationDetails.billing_address_display;
+      billing_address.value = QuotationDetails.billing_address;
+      total_taxes.value = QuotationDetails.total_taxes_and_charges;
+      shippingaddress.value = QuotationDetails.shipping_address;
+      supplier.value = QuotationDetails.supplier;
+      pocode.value = QuotationDetails.supplier_name;
+      poreference.value = QuotationDetails.bill_no;
+      sup_address_line1.value = QuotationDetails.sup_address_line1;
+    }
+  } catch (error) {
+    console.error('Error fetching order details:', error);
+  }
+};
+
+onMounted(fetchQuoteDetails);
+
+const details = computed(() => [
+  { label: 'Name', value: name.value },
+  { label: 'Date', value: datevalue.value },
+  { label: 'Company', value: company.value },
+  { label: 'Billing Details', value: billing_details.value },
+  { label: 'Billing Address', value: billing_address.value },
+  { label: 'Input Value', value: inputValue.value },
+  { label: 'Total Value', value: total.value },
+  { label: 'Shipping Address', value: shippingaddress.value },
+  { label: 'Supplier', value: supplier.value },
+  { label: 'PO Code', value: pocode.value },
+  { label: 'PO Reference', value: poreference.value },
+  { label: 'Allowed Currency', value: allowedcurrency.value },
+  { label: 'Supplier Address Line 1', value: sup_address_line1.value },
+]);
+
+const getTheme = (inputValue) => {
+  switch (inputValue) {
+    case 'Paid': return 'green';
+    case 'Completed': return 'blue';
+    case 'Draft': return 'red';
+    case 'Closed': return 'orange';
+    default: return 'gray';
+  }
+};
+</script>
+
