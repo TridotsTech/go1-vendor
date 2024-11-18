@@ -117,8 +117,8 @@
 import AppSidebar from '@/components/Layouts/AppSidebar.vue';
 // import AppHeader from '@/components/Layouts/AppHeader.vue';
 import { ref, onMounted, reactive,watch } from 'vue'
-import { createResource,Badge, Breadcrumbs } from 'frappe-ui'
-import { useRouter, useRoute } from 'vue-router'
+import { createResource,Badge, } from 'frappe-ui'
+import { useRoute } from 'vue-router'
 
 const route = useRoute()
 

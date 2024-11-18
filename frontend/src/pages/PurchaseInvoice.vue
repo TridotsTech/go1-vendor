@@ -194,12 +194,16 @@ const logged_users = users;
     switch (status) {
       case 'Draft':
         return { theme: "red" };
-      case 'Overdue':
+      case 'Unpaid':
+        return { theme: "red" };
+      case 'Paid':
         return { theme: "blue" };
-      case 'Cancelled':
+      case 'To Receive and Bill':
         return { theme: "green" };
-      case 'Return':
-        return { theme: "orange" };
+      case 'On Hold':
+        return { theme: "gray" };
+      case 'To Bill':
+        return { theme: "orange" }
       default:
         return { theme: "gray" };
     }

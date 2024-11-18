@@ -35,8 +35,7 @@
             </Button>
           </div>
         </div>
-       
-
+      
         <!-- ListView section -->
         <div class=" flex-1 flex flex-col px-5 overflow-auto" v-if="supplier_detail.data">
           <ListView 
@@ -191,11 +190,15 @@ console.log("data",field_filters)
     switch (status) {
       case 'Draft':
         return { theme: "red" };
-      case 'Overdue':
+      case 'To Bill':
+        return { theme: "purple"}      
+      case 'Submitted':
+        return { theme: "red" };
+      case 'To Receive':
         return { theme: "blue" };
-      case 'Cancelled':
+      case 'To Receive and Bill':
         return { theme: "green" };
-      case 'Return':
+      case 'On Hold':
         return { theme: "orange" };
       default:
         return { theme: "gray" };

@@ -11,8 +11,9 @@ def make_supplier_invoice(source_name,target_doc = None , ignore_permissions =Fa
             ""
             "Purchase Order": {
                 "doctype": "Supplier Invoice",
-                # "field_map": {
-                # },
+                "field_map": {
+                    'rounded_total':'rounded_total'
+                },
             },
         },
         target_doc,
@@ -81,11 +82,41 @@ from frappe.utils import flt
 from collections import defaultdict
 from frappe import _
 
+# @frappe.whitelist()
+# def supplier_login():
+#     user=frappe.session.user
+#     result=frappe.db.get_all('Portal User',fields=['parent'],filters={"user":user})
+#     return result[0].parent if result else ''
 @frappe.whitelist()
 def supplier_login():
-    user=frappe.session.user
-    result=frappe.db.get_all('Portal User',fields=['parent'],filters={"user":user})
-    return result[0].parent if result else ''
+    user = frappe.session.user
+
+    # Fetch the user's email ID from the Address doctype
+    query = frappe.db.sql("""
+        SELECT A.email_id
+        FROM `tabAddress` A
+        WHERE A.email_id = %s AND A.disabled = 0
+    """, (user,))
+
+    if query:
+        # If email exists in the Address doctype, check for associated supplier
+        email_id = query[0][0]  # Extract the email_id from the query result
+
+        # Now fetch the supplier name based on the email
+        supplier_query = frappe.db.sql("""
+            SELECT S.supplier_name
+            FROM `tabSupplier` S
+            INNER JOIN `tabAddress` A ON A.name = S.supplier_primary_address
+            WHERE A.email_id = %s AND A.disabled = 0
+        """, (email_id,))
+
+        if supplier_query:
+            # Return the supplier name (assuming it is unique)
+            return supplier_query[0][0]
+
+    # If no supplier is found, return an empty string or handle accordingly
+    return ''
+
 
 #Number Card 1
 @frappe.whitelist()

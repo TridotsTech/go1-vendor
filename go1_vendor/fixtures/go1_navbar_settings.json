@@ -4,7 +4,7 @@
   "docstatus": 0,
   "doctype": "Go1 Navbar Settings",
   "logo_width": null,
-  "modified": "2024-10-29 12:22:12.505084",
+  "modified": "2024-11-15 16:15:26.583388",
   "name": "Go1 Navbar Settings",
   "sidebar_settings": [
    {
@@ -26,7 +26,7 @@
     "parenttype": "Go1 Navbar Settings",
     "reference_document": null,
     "role": null,
-    "route": "/RequestQuotation",
+    "route": "/request-for-quotation",
     "title": "RFQ"
    },
    {
@@ -37,7 +37,7 @@
     "parenttype": "Go1 Navbar Settings",
     "reference_document": null,
     "role": null,
-    "route": "/Supplier",
+    "route": "/supplier-quotation",
     "title": " Quotation"
    },
    {
@@ -48,7 +48,7 @@
     "parenttype": "Go1 Navbar Settings",
     "reference_document": null,
     "role": null,
-    "route": "/Purchase",
+    "route": "/purchase-order",
     "title": "Orders"
    },
    {
@@ -59,7 +59,7 @@
     "parenttype": "Go1 Navbar Settings",
     "reference_document": null,
     "role": null,
-    "route": "/SupplierInvoice",
+    "route": "/supplier-invoice",
     "title": "Invoice"
    },
    {
@@ -70,7 +70,7 @@
     "parenttype": "Go1 Navbar Settings",
     "reference_document": null,
     "role": null,
-    "route": "/Addresses",
+    "route": "/addresses",
     "title": "Addresses"
    },
    {
@@ -81,7 +81,7 @@
     "parenttype": "Go1 Navbar Settings",
     "reference_document": null,
     "role": null,
-    "route": "/IssuesList",
+    "route": "/issues",
     "title": "Ticket "
    }
   ]

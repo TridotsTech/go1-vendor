@@ -210,11 +210,11 @@
   
   const getStatusTheme = (status) => {
     switch (status) {
-      case 'Draft':
+      case 'Open':
         return { theme: "red" };
-      case 'Overdue':
-        return { theme: "blue" };
-      case 'Cancelled':
+      case 'Resolved':
+        return { theme: "gray" };
+      case 'Closed':
         return { theme: "green" };
       case 'Return':
         return { theme: "orange" };

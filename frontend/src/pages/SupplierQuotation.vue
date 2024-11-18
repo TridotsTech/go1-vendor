@@ -195,7 +195,7 @@ const fetchOrder = async () => {
     switch (status) {
       case 'Draft':
         return { theme: "red" };
-      case 'Overdue':
+      case 'Submitted':
         return { theme: "blue" };
       case 'Cancelled':
         return { theme: "green" };

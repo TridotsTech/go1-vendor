@@ -106,8 +106,6 @@ import {
   DatePicker,
   FormControl,
   Badge,
-  FeatherIcon,
-  Breadcrumbs
 } from 'frappe-ui';
 import { ref, onMounted, watch, reactive } from 'vue';
 
@@ -164,7 +162,7 @@ const fetchOrder = async () => {
       
     }
   });
- 
+
 };
 
 const OpenClick = (row) => {
@@ -197,7 +195,7 @@ const getStatusTheme = (status) => {
   switch (status) {
     case 'Draft':
       return { theme: "red" };
-    case 'Overdue':
+    case 'Submitted':
       return { theme: "blue" };
     case 'Cancelled':
       return { theme: "green" };

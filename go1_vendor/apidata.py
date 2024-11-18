@@ -7,35 +7,98 @@ def get_userid():
 
 # user name api --------------
 
+# @frappe.whitelist()
+# def get_test():
+#     user_check=get_userid()
+#     if user_check!="Administrator":
+#         filters={'user': user_check}
+#         supplier = frappe.db.get_all("Portal User", filters=filters, fields=['parent'])
+#         # new_supplier = frappe.db.get_doc("Supplier")
+#         # frappe.log_error("nb",new_supplier)
+
+#         return supplier[0].parent if supplier else 'Guest'
+#     return ''
+import frappe
+import json
+
+@frappe.whitelist()
+def get_userid():
+    return frappe.session.user
+
 @frappe.whitelist()
 def get_test():
-    user_check=get_userid()
-    if user_check!="administrator":
-        filters={'user': user_check}
-        supplier = frappe.db.get_all("Portal User", filters=filters, fields=['parent'])
-
-    return supplier[0].parent if supplier else ''
-
+    user_check = get_userid()
+    if user_check != "Administrator":
+        # Fetching the supplier name based on email address
+        query = frappe.db.sql("""
+            SELECT S.supplier_name
+            FROM `tabSupplier` S
+            INNER JOIN `tabAddress` A ON A.name = S.supplier_primary_address
+            WHERE A.email_id = %s
+            AND A.disabled = 0
+        """, (user_check,))
+        
+        # Check if any results were found and return the supplier name (assuming it's unique)
+        if query:
+            return query[0][0]  # Returning the supplier name
+    return ''  # Return empty string if the user is Administrator or no match found
 
 @frappe.whitelist()
 def get_issues(**field_filters):
     my_data = get_test()
-    # Setting filters based on supplier data
     filters = {}
-    if my_data:
-        filters['custom_supplier'] = my_data
-    final_filter = json.loads(field_filters.get('field_filters'))
-   
-    if final_filter != "":
-        for key, value in final_filter.items():
-            if key != 'cmd':
-                if value:  # Only apply non-empty filters
-                    filters[key] = value
 
-            # frappe.log_error("issye",filters)
-    
+    # Apply supplier filter if the user is a supplier
+    if my_data:  # If my_data contains a supplier name, apply the filter
+        filters['custom_supplier'] = my_data
+
+    # Adding other filters from the request
+    final_filter = json.loads(field_filters.get('field_filters', '{}'))
+
+    if final_filter:
+        for key, value in final_filter.items():
+            if key != 'cmd' and value:  # Avoid empty filters
+                filters[key] = value
+
+    frappe.log_error("Filters applied:", filters)
+
+    # Fetching the issues based on the filters
     issues = frappe.db.get_all("Issue", fields=['*'], filters=filters)
     return issues
+
+# @frappe.whitelist()
+# def get_test():
+#     user_check=get_userid()
+#     if user_check!="Administrator":
+#         query = frappe.db.sql(f"""SELECT S.supplier_name
+#                                 FROM `tabSupplier` S
+#                                 INNER JOIN `tabAddress` A ON A.name = S.supplier_primary_address
+#                                 WHERE A.email_id = '{user_check}'
+#                                 AND A.disabled = 0""")
+#         return query
+#     return 'Admin'
+    
+# @frappe.whitelist()
+# def get_issues(**field_filters):
+#     my_data = get_test()
+#     # Setting filters based on supplier data
+#     # filters = {}
+#     if my_data ='Admin':
+#         filters = {}
+#     elif my_data:
+#         filters['custom_supplier'] = my_data
+#     final_filter = json.loads(field_filters.get('field_filters'))
+   
+#     if final_filter != "":
+#         for key, value in final_filter.items():
+#             if key != 'cmd':
+#                 if value:  # Only apply non-empty filters
+#                     filters[key] = value
+
+#             # frappe.log_error("issye",filters)
+    
+#     issues = frappe.db.get_all("Issue", fields=['*'], filters=filters)
+#     return issues
 
 @frappe.whitelist()
 def get_quotation(**field_filters):
@@ -45,17 +108,22 @@ def get_quotation(**field_filters):
     if my_data:
         filters['supplier'] = my_data
     final_filter = json.loads(field_filters.get('field_filters'))
-
+    frappe.log_error("final_filter",final_filter)
     if final_filter != "":
         for key, value in final_filter.items():
             if key != 'cmd':
-                if value:  # Only apply non-empty filters
-                    filters[key] = value
-
+                if value :
+                    if key =='vendor' :
+                        filters['supplier'] = value
+                        
+                    else:  # Only apply non-empty filters
+                        filters[key] = value
+    # frappe.log_error("final_filter",quotations)
     quotations = frappe.db.get_all("Request for Quotation", fields=['*'], filters=filters)
     # supplier_item = frappe.db.get_all("Request for Quotation Supplier", fields=['*'])
     # quotation_items = frappe.db.get_all("Request for Quotation Item", fields=['*'])
-
+    
+    
     quotation_docs = []
 
     for quotation in quotations:
@@ -155,7 +223,7 @@ def get_purchaseinvoice(**field_filters):
         filters['supplier'] = my_data
     
     final_filter = json.loads(field_filters.get('field_filters'))
-    frappe.log_error('final_filter ',final_filter)
+    # frappe.log_error('final_filter ',final_filter)
     if final_filter != "":
         for key, value in final_filter.items():
             if key != 'cmd':
@@ -192,6 +260,8 @@ def get_address(**field_filters):
     filters = {}
     # if my_data:
         # filters['supplier'] = my_data
+
+    # frappe.log_error("types",type(field_filters))
     
     final_filter = json.loads(field_filters.get('field_filters'))
     # frappe.log_error('final_filter ',final_filter)
@@ -200,7 +270,7 @@ def get_address(**field_filters):
             if key != 'cmd':
                 if value:  # Only apply non-empty filters
                     filters[key] = value
-
+                
     address_list = []   
 
     addresses = frappe.db.get_all("Address", fields=['*'],filters=filters)
@@ -241,6 +311,10 @@ def additional_data(addtional_docs):
             item['rate'] = frappe.utils.fmt_money(item['rate'], currency=quotation.get('currency'))
             item['amount'] = frappe.utils.fmt_money(item['amount'], currency=quotation.get('currency'))
 
+        for taxe in quotation['taxes']:
+            taxe['rate'] = frappe.utils.fmt_money(taxe['rate'], currency=quotation.get('currency'))
+            taxe['tax_amount'] = frappe.utils.fmt_money(taxe['tax_amount'], currency=quotation.get('currency'))
+            taxe['total'] = frappe.utils.fmt_money(taxe['total'], currency=quotation.get('currency'))
         # Fetch and add supplier address details
         if quotation.get('supplier_address'):
             address = frappe.get_doc('Address', quotation['supplier_address'])
@@ -266,3 +340,49 @@ def additional_data(addtional_docs):
                 'ship_pincode': address.pincode
             })
     return addtional_docs
+
+@frappe.whitelist(allow_guest=True)
+def get_register(registerdata):
+    # frappe.log_error(message=f"Initial data type: {type(registerdata)}", title="Data Type Check")
+
+   
+    register_data = json.loads(registerdata)
+    
+    # Log the parsed data type
+
+    # frappe.log_error("Parsed Data Type",type(register_data))
+
+    register = frappe.new_doc("Supplier Registration")
+    
+    register.first_name = register_data.get('first_name')
+    register.last_name = register_data.get('last_name')
+    register.phone = register_data.get('phone')
+    register.email = register_data.get('email')
+    register.state = register_data.get('state')
+    register.zip_code = register_data.get('zip_code')
+    register.country = register_data.get('country')
+    register.address_line1 = register_data.get('address_line1')
+    register.address_line2 = register_data.get('address_line2')
+    register.city = register_data.get('city')
+    # register.website = register_data('website')
+
+
+    # Log the final register document as a dictionary
+    # frappe.log_error(message=f"Register document: {register.as_dict()}", title="Register Document")
+
+    register.insert()
+    frappe.db.commit()
+
+@frappe.whitelist(allow_guest=True)
+def check_supplier(email):
+    frappe.log_error('sdas',[email])
+    # user_check=get_userid()
+
+    query = frappe.db.sql(f"""SELECT S.supplier_name
+                                FROM `tabSupplier` S
+                                INNER JOIN `tabAddress` A ON A.name = S.supplier_primary_address
+                                WHERE A.email_id = '{email}'
+                                AND A.disabled = 0""",as_dict=True)
+    return query
+    # email = frappe.get_list('Supplier', filters={'email': email}, fields=['email'])
+    # return {"exists": len(email) > 0}

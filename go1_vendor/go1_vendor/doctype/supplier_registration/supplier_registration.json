@@ -9,56 +9,22 @@
   "personal_details_tab",
   "status",
   "column_break_g8rn",
-  "reason",
   "section_break_mlfz",
   "first_name",
-  "phone",
-  "email",
-  "supplier_id",
-  "column_break_xsqm",
   "last_name",
-  "alternate_mobile_number",
-  "section_break_jjjx",
+  "email",
+  "column_break_xsqm",
+  "supplier_id",
+  "phone",
   "section_break_8as7",
-  "address_map",
-  "address",
-  "latitude",
-  "longitude",
+  "address_line1",
+  "address_line2",
   "column_break_o1fo",
   "country",
   "state",
   "city",
-  "zipcode",
-  "section_break_2",
-  "restaurant_name",
-  "business_address_map",
-  "business_address",
-  "business_latitude",
-  "operate_own_warehouse",
-  "column_break_9",
-  "business_country",
-  "business_state",
-  "business_city",
-  "business_zip_code",
-  "business_landmark",
-  "business_longitude",
-  "website",
-  "posting_date",
-  "driver_type",
-  "menu_url",
-  "payment_plan",
-  "online_merchant_id",
-  "section_break_15",
-  "gstin",
-  "column_break_24",
-  "pan",
-  "column_break_26",
-  "cin",
-  "naming_series",
-  "business_created",
-  "section_break_41",
-  "party_type",
-  "party"
+  "zip_code",
+  "naming_series"
  ],
  "fields": [
   {
@@ -80,13 +46,6 @@
    "fieldtype": "Column Break"
   },
   {
-   "depends_on": "eval:doc.status==\"Rejected\"",
-   "fieldname": "reason",
-   "fieldtype": "Data",
-   "label": "Reason",
-   "mandatory_depends_on": "eval:doc.status==\"Rejected\""
-  },
-  {
    "fieldname": "section_break_mlfz",
    "fieldtype": "Section Break"
   },
@@ -94,13 +53,6 @@
    "fieldname": "first_name",
    "fieldtype": "Data",
    "label": "First Name",
-   "reqd": 1
-  },
-  {
-   "fieldname": "phone",
-   "fieldtype": "Phone",
-   "label": "Mobile Number",
-   "options": "Phone",
    "reqd": 1
   },
   {
@@ -128,41 +80,9 @@
    "reqd": 1
   },
   {
-   "fieldname": "alternate_mobile_number",
-   "fieldtype": "Phone",
-   "label": "Alternate Mobile Number"
-  },
-  {
-   "fieldname": "section_break_jjjx",
-   "fieldtype": "Section Break"
-  },
-  {
    "fieldname": "section_break_8as7",
    "fieldtype": "Section Break",
    "label": "Address"
-  },
-  {
-   "fieldname": "address_map",
-   "fieldtype": "Geolocation",
-   "label": "Address Map"
-  },
-  {
-   "fieldname": "address",
-   "fieldtype": "Data",
-   "label": "Address",
-   "reqd": 1
-  },
-  {
-   "fieldname": "latitude",
-   "fieldtype": "Data",
-   "label": "Latitude",
-   "reqd": 1
-  },
-  {
-   "fieldname": "longitude",
-   "fieldtype": "Data",
-   "label": "Longitude",
-   "reqd": 1
   },
   {
    "fieldname": "column_break_o1fo",
@@ -172,164 +92,18 @@
    "fieldname": "country",
    "fieldtype": "Link",
    "label": "Country",
-   "options": "Country",
-   "reqd": 1
-  },
-  {
-   "fieldname": "business_state",
-   "fieldtype": "Data",
-   "label": "State",
-   "reqd": 1
-  },
-  {
-   "fieldname": "business_city",
-   "fieldtype": "Data",
-   "label": "City",
-   "reqd": 1
-  },
-  {
-   "fieldname": "zipcode",
-   "fieldtype": "Data",
-   "label": "Zipcode",
-   "reqd": 1
-  },
-  {
-   "fieldname": "section_break_2",
-   "fieldtype": "Tab Break",
-   "label": "Business Details"
-  },
-  {
-   "fieldname": "restaurant_name",
-   "fieldtype": "Data",
-   "in_list_view": 1,
-   "label": "Business Name",
-   "reqd": 1
-  },
-  {
-   "fieldname": "business_address_map",
-   "fieldtype": "Data",
-   "label": "Seller Address Map",
-   "options": "Map"
-  },
-  {
-   "fieldname": "business_address",
-   "fieldtype": "Small Text",
-   "label": "Seller Address",
-   "reqd": 1
-  },
-  {
-   "fieldname": "business_latitude",
-   "fieldtype": "Data",
-   "label": "Latitude",
-   "reqd": 1
-  },
-  {
-   "default": "0",
-   "fieldname": "operate_own_warehouse",
-   "fieldtype": "Check",
-   "label": "I Operate own warehouse"
-  },
-  {
-   "fieldname": "column_break_9",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "business_country",
-   "fieldtype": "Link",
-   "label": "Country",
-   "options": "Country",
-   "reqd": 1
+   "options": "Country"
   },
   {
    "fieldname": "state",
    "fieldtype": "Data",
-   "label": "State",
-   "reqd": 1
+   "label": "State"
   },
   {
    "fieldname": "city",
    "fieldtype": "Data",
    "label": "City",
    "reqd": 1
-  },
-  {
-   "fieldname": "business_zip_code",
-   "fieldtype": "Data",
-   "label": "Zip Code",
-   "reqd": 1
-  },
-  {
-   "fieldname": "business_landmark",
-   "fieldtype": "Data",
-   "label": "Landmark"
-  },
-  {
-   "fieldname": "business_longitude",
-   "fieldtype": "Data",
-   "label": "Longitude",
-   "reqd": 1
-  },
-  {
-   "fieldname": "website",
-   "fieldtype": "Data",
-   "label": "Website"
-  },
-  {
-   "fieldname": "posting_date",
-   "fieldtype": "Data",
-   "label": "Posting Date"
-  },
-  {
-   "default": "Service Provider",
-   "fieldname": "driver_type",
-   "fieldtype": "Select",
-   "label": "Use Drivers Of?",
-   "options": "Self\nService Provider"
-  },
-  {
-   "fieldname": "menu_url",
-   "fieldtype": "Data",
-   "label": "Menu Url"
-  },
-  {
-   "fieldname": "payment_plan",
-   "fieldtype": "Data",
-   "label": "Payment Plan"
-  },
-  {
-   "default": "No",
-   "fieldname": "online_merchant_id",
-   "fieldtype": "Select",
-   "label": "Online Merchant ID",
-   "options": "Yes\nNo"
-  },
-  {
-   "fieldname": "section_break_15",
-   "fieldtype": "Section Break",
-   "label": "GST Details"
-  },
-  {
-   "fieldname": "gstin",
-   "fieldtype": "Data",
-   "label": "GSTIN"
-  },
-  {
-   "fieldname": "column_break_24",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "pan",
-   "fieldtype": "Data",
-   "label": "PAN"
-  },
-  {
-   "fieldname": "column_break_26",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "cin",
-   "fieldtype": "Data",
-   "label": "CIN"
   },
   {
    "fieldname": "naming_series",
@@ -339,35 +113,35 @@
    "options": "SR-"
   },
   {
-   "default": "0",
-   "fieldname": "business_created",
-   "fieldtype": "Check",
-   "hidden": 1,
-   "label": "Business Created"
+   "fieldname": "phone",
+   "fieldtype": "Data",
+   "label": "Mobile Number",
+   "reqd": 1
   },
   {
-   "fieldname": "section_break_41",
-   "fieldtype": "Section Break"
+   "fieldname": "address_line1",
+   "fieldtype": "Small Text",
+   "label": "Address Line1"
   },
   {
-   "fieldname": "party_type",
-   "fieldtype": "Link",
-   "label": "Party Type",
-   "options": "DocType"
+   "fieldname": "address_line2",
+   "fieldtype": "Small Text",
+   "label": "Address Line2"
   },
   {
-   "fieldname": "party",
-   "fieldtype": "Dynamic Link",
-   "label": "Party",
-   "options": "party_type"
+   "fieldname": "zip_code",
+   "fieldtype": "Data",
+   "label": "Postal Code",
+   "reqd": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-10-29 10:23:02.301682",
+ "modified": "2024-11-14 15:01:10.674983",
  "modified_by": "Administrator",
  "module": "Go1 Vendor",
  "name": "Supplier Registration",
+ "naming_rule": "By \"Naming Series\" field",
  "owner": "Administrator",
  "permissions": [
   {
@@ -375,6 +149,18 @@
    "delete": 1,
    "email": 1,
    "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "permlevel": 1,
    "print": 1,
    "read": 1,
    "report": 1,
