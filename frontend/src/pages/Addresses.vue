@@ -5,9 +5,10 @@
     </div>
     <div class="h-full w-full flex flex-col overflow-auto">
       <div class="flex-1 flex flex-col h-full">
-        <AppHeader >
-          <template #createbutton>
-            <Button
+      <div class=" mb-2 border-b p-4 flex justify-between">
+      <span>Addresses</span>
+      <div>
+      <Button
               variant="solid"
               theme="gray"
               size="sm"
@@ -19,11 +20,8 @@
             >
               + Create
             </Button>
-          </template>
-          </AppHeader>
-        
-        <slot />
-
+            </div> 
+    </div>
         <!-- Filter and Reset button section -->
         <div class="flex mt-4 mb-4 px-5 justify-between">
           <!-- Filters on the left side -->
@@ -112,7 +110,7 @@
   
 <script setup>
   import AppSidebar from '@/components/Layouts/AppSidebar.vue';
-  import AppHeader from '@/components/Layouts/AppHeader.vue';
+  // import AppHeader from '@/components/Layouts/AppHeader.vue';
   import { useRouter } from 'vue-router';
   import { Button, createResource,ListView,ListFooter, Select, DatePicker, FormControl, Badge, } from 'frappe-ui';
   import { ref, onMounted, watch, reactive } from 'vue';
@@ -121,6 +119,7 @@
   const columns_data = ref([]);
   const filter_data=ref([])
   const field_filters = reactive({});
+  const supplieroption =ref('')
   const pageLengthCount = ref(20);
   
   const supplier_detail = createResource({
@@ -188,6 +187,7 @@
         delete newFilters[key];
       }
     }
+    
   });
   
   const getStatusTheme = (status) => {
@@ -226,6 +226,7 @@
   };
   
   const getComponentProps = (fieldData) => {
+    
     const props = {
       Select: {
         options: getOptions(fieldData.options),
@@ -234,6 +235,8 @@
       Link: {
         size: "sm",
         variant: "subtle",
+        type: "select",
+        options: supplieroption.value,
         placeholder: fieldData.label,
       },
       Date: {
@@ -260,9 +263,22 @@
       value: option,
     }));
   };
+  const createSupplier = async (limit = 1000) => {
+  try {
+    const response = await fetch(`/api/resource/Country?fields=["country_name"]&limit=${limit}`);
+    if (!response.ok) throw new Error('Network response was not ok');
+
+    const prioritydata = await response.json();
+    supplieroption.value = prioritydata.data.map((user) => user.country_name) || [];
+    
+  } catch (error) {
+    console.error('Error fetching priorities:', error);
+  }
+  };
   
-  
-  onMounted(() => {
+
+  onMounted(async () => {
+    await createSupplier();
   fetchOrder();
   supplier_detail.fetch();
   });

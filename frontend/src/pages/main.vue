@@ -5,11 +5,15 @@
    </div>
    <div class="flex-1 flex flex-col h-full overflow-auto">
     <div class="h-full w-full flex flex-col">
-     <AppHeader />
+        <div class=" mb-2 border-b p-4">
+        <span>Dashboard</span>
+        </div>
+     <!-- <AppHeader /> -->
      <slot />
      <div class="overflow-auto">
                     <div class="flex gap-[12px] px-5 py-3">
-                        <div class="flex-[0_0_calc(25%_-_12px)] border rounded-lg p-5 h-[125px] w-[245px]">
+                        <router-link to="/purchase-order">
+                        <div class="flex-[0_0_calc(25%_-_12px)] border rounded-lg p-5 h-[125px] w-[300px]">
                             <div class="card">
                                 <div class="card-body">
                                     <p class="text-xs">AVERAGE MONTHLY BUSINESS</p>
@@ -21,7 +25,9 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="flex-[0_0_calc(25%_-_12px)] border rounded-lg p-5 h-[125px] w-[245px]">
+                    </router-link>
+                        <router-link to="/request-for-quotation">
+                        <div class="flex-[0_0_calc(25%_-_12px)] border rounded-lg p-5 h-[125px] w-[300px]">
                             <div class="card">
                                 <div class="card-body">
                                     <p class="text-xs">OPEN RFQ</p>
@@ -31,7 +37,9 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="flex-[0_0_calc(25%_-_12px)] border rounded-lg p-5 h-[125px] w-[245px]">
+                    </router-link>
+                    <router-link to="/supplier-quotation">
+                        <div class="flex-[0_0_calc(25%_-_12px)] border rounded-lg p-5 h-[125px] w-[300px]">
                             <div class="card">
                                 <div class="card-body">
                                     <p class="text-xs">PENDING INVOICES</p>
@@ -42,7 +50,9 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="flex-[0_0_calc(25%_-_12px)] border rounded-lg p-5 h-[125px] w-[245px]">
+                    </router-link>
+                    <router-link to="/purchase-order">
+                        <div class="flex-[0_0_calc(25%_-_12px)] border rounded-lg p-5 h-[125px] w-[300px]">
                             <div class="card">
                                 <div class="card-body">
                                     <p class="text-xs">OPEN ORDERS</p>
@@ -53,6 +63,7 @@
                                 </div>
                             </div>
                         </div>
+                    </router-link>
                     </div>
                     <div class="flex gap-[12px] px-5 pb-3">
                         <div
@@ -86,6 +97,7 @@ import AppSidebar from '@/components/Layouts/AppSidebar.vue';
 import AppHeader from '@/components/Layouts/AppHeader.vue';
 import {  ref,onMounted } from 'vue';
 import { Doughnut, Line, Bar } from 'vue-chartjs';
+
 import { Chart as ChartJS, Title, Tooltip, Legend, ArcElement, LineElement, CategoryScale, LinearScale, PointElement, BarElement } from 'chart.js';
 
 ChartJS.register(Title, Tooltip, Legend, ArcElement, LineElement, CategoryScale, LinearScale, PointElement, BarElement);
@@ -94,7 +106,6 @@ const grandTotal = ref(null);
 const pendingInvoice = ref(null);
 const pendingInwards = ref(null);
 const openRfqs = ref(null);
-
 
 // Number card1
 const fetchGrandTotal = async () => {
@@ -138,6 +149,12 @@ const fetchOpenRfqs = async () => {
         console.error('Error fetching purchase count:', error);
     }
 };
+// methods: {
+//   navigateToPage() {
+//     this.$router.push('/target-page'); // Replace '/target-page' with the actual route path
+//   }
+// }
+
 // Number card3
 const pendingInvoiceCount = async () => {
     try {

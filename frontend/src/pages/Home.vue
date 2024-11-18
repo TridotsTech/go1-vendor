@@ -4,7 +4,7 @@
       Welcome {{ session.user }}!
     </h2>
 
-    <Button theme="gray" variant="solid" icon-left="code" @click="ping.fetch" :loading="ping.loading">
+    <Button theme="gray" variant="solid" icon-left="code" @click="ping.fetch" :loading="ping.loading            ">
       Click to send 'ping' request
     </Button>
     <div>

@@ -4,8 +4,11 @@
       <AppSidebar />
     </div>
     <div class="h-full w-full flex flex-col overflow-auto">
+      <div class=" mb-2 border-b p-4">
+      <span> Request for Quotations</span>
+    </div>
       <div class="flex-1 flex flex-col h-full">
-        <AppHeader />
+        <!-- <AppHeader /> -->
         <slot />
         <!-- Filter and Reset button section -->
         <div class="flex mt-4 mb-4 px-5 justify-between">
@@ -92,7 +95,7 @@
 
 <script setup>
 import AppSidebar from '@/components/Layouts/AppSidebar.vue';
-import AppHeader from '@/components/Layouts/AppHeader.vue';
+// import AppHeader from '@/components/Layouts/AppHeader.vue';
 import { useRouter } from 'vue-router';
 import {
   Button,
@@ -103,7 +106,8 @@ import {
   DatePicker,
   FormControl,
   Badge,
-  FeatherIcon 
+  FeatherIcon,
+  Breadcrumbs
 } from 'frappe-ui';
 import { ref, onMounted, watch, reactive } from 'vue';
 
@@ -112,6 +116,14 @@ const columns_data = ref([]);
 const filter_data = ref([]);
 let field_filters = reactive({});
 const pageLengthCount = ref(20);
+const supplieroption = ref('')
+
+const users = createResource({
+    url: 'go1_vendor.apidata.get_test',
+    cache: ['true']
+});
+users.fetch();
+const logged_users = users;
 
 const supplier_detail = createResource({
   url: 'go1_vendor.apidata.get_quotation',
@@ -131,7 +143,7 @@ const fetchOrder = async () => {
   const data = await order.fetch();
   const fields = data.fields;
 
-  // columns_data.value = [];
+  columns_data.value = [];
   filter_data.value = [];
   filter_data.value.push({ fieldname: 'name', fieldtype: 'Data', options: null, label: 'ID' });
   columns_data.value.push({ label: 'Name', key: 'name', width: 2 },{label:'Status',key:'status', width:1});
@@ -145,9 +157,14 @@ const fetchOrder = async () => {
       });
     }
     if (field.in_standard_filter) {
+      if (logged_users.data && field.fieldname === 'vendor'){
+         return;
+        }
       filter_data.value.push(field);
+      
     }
   });
+ 
 };
 
 const OpenClick = (row) => {
@@ -164,7 +181,7 @@ watch(pageLengthCount, (newPageLength) => {
 });
 
 watch(field_filters, (newFilters) => {
-
+  
   supplier_detail.params={"field_filters": JSON.stringify(field_filters)};
   supplier_detail.fetch();
   for (let key in newFilters) {
@@ -173,7 +190,7 @@ watch(field_filters, (newFilters) => {
     }
   }
   
-  console.log("hit",field_filters)
+
 }, { deep: true });
 
 const getStatusTheme = (status) => {
@@ -203,7 +220,7 @@ const getComponentType = (fieldData) => {
     Select,
     Color: FormControl,
     Date: DatePicker,
-    Link: FormControl,
+    Link:FormControl,
     TextEditor: FormControl,
     Data: FormControl,
     ReadOnly: 'ReadOnlyComponent',
@@ -213,14 +230,16 @@ const getComponentType = (fieldData) => {
 
 const getComponentProps = (fieldData) => {
   const props = {
-    Select: {
+    Select: { 
       options: getOptions(fieldData.options),
       placeholder: fieldData.label,
     },
     Link: {
       size: "sm",
       variant: "subtle",
+      type: "select",
       placeholder: fieldData.label,
+      options: supplieroption.value,
     },
     Date: {
       size: "sm",
@@ -246,9 +265,21 @@ const getOptions = (options) => {
     value: option,
   }));
 };
+const createSupplier = async () => {
+  try {
+    const response = await fetch('/api/resource/Supplier?fields=["supplier_name"]');
+    if (!response.ok) throw new Error('Network response was not ok');
 
-onMounted(() => {
+    const prioritydata = await response.json();
+    supplieroption.value = prioritydata.data.map((user) => user.supplier_name) || [];
+  } catch (error) {
+    console.error('Error fetching priorities:', error);
+  }
+};
+
+onMounted(async() => {
+  await createSupplier();
   fetchOrder();
   supplier_detail.fetch();
 });
-</script>
+</script> 

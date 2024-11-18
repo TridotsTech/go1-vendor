@@ -4,8 +4,11 @@
       <AppSidebar />
     </div>
     <div class="h-full w-full flex flex-col overflow-auto">
+      <div class="mb-2 border-b p-4">
+      <span> Supplier Invoices</span>
+    </div>
       <div class="flex-1 flex flex-col h-full">
-        <AppHeader />
+        <!-- <AppHeader /> -->
         <slot />
 
         <!-- Filter and Reset button section -->
@@ -95,7 +98,7 @@
   
   <script setup>
   import AppSidebar from '@/components/Layouts/AppSidebar.vue';
-  import AppHeader from '@/components/Layouts/AppHeader.vue';
+  // import AppHeader from '@/components/Layouts/AppHeader.vue';
   import { useRouter } from 'vue-router';
   import { Button, createResource,ListView,ListFooter, Select, DatePicker, FormControl, Badge, } from 'frappe-ui';
   import { ref, onMounted, watch, reactive } from 'vue';
@@ -105,7 +108,17 @@
   const filter_data=ref([])
   const field_filters = reactive({});
   const pageLengthCount = ref(20);
+  const supplieroption = ref('')
+  const companyoption =ref('')
+
   // const totalRows=ref('')
+
+  const users = createResource({
+    url: 'go1_vendor.apidata.get_test',
+    cache: ['true']
+});
+users.fetch();
+const logged_users = users;
   
   const supplier_detail = createResource({
    url: 'go1_vendor.apidata.get_purchaseinvoice',
@@ -141,6 +154,9 @@
        });
      }
      if (field.in_standard_filter) {
+       if (logged_users.data && field.fieldname === 'supplier'){
+         return;
+        }
        filter_data.value.push(field);  
      }
    });
@@ -218,7 +234,9 @@
       Link: {
         size: "sm",
         variant: "subtle",
+        type: "select",
         placeholder: fieldData.label,
+        options: fieldData.fieldname== "supplier" ? supplieroption.value : companyoption.value
       },
       Date: {
         size: "sm",
@@ -244,9 +262,25 @@
       value: option,
     }));
   };
+  const createSupplier = async () => {
+  try {
+    const response = await fetch('/api/resource/Supplier?fields=["supplier_name"]');
+    const companyresponse = await fetch('/api/resource/Company?fields=["company_name"]');
+
+    if (!response.ok) throw new Error('Network response was not ok');
+
+    const prioritydata = await response.json();
+    const companydata = await companyresponse.json();
+    supplieroption.value = prioritydata.data.map((user) => user.supplier_name) || [];
+    companyoption.value = companydata.data.map((user) => user.company_name) || [];
+    
+  } catch (error) {
+    console.error('Error fetching priorities:', error);
+  }
+};
   
-  
-  onMounted(() => {
+  onMounted(async() => {
+  await createSupplier();
   fetchOrder();
   supplier_detail.fetch();
   });

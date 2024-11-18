@@ -14,7 +14,9 @@
     "frappe-ui": "^0.1.71",
     "vue": "^3.2.25",
     "vue-chartjs": "^5.3.1",
+    "vue-phone-number-input": "^1.12.13",
     "vue-router": "^4.0.12",
+    "vue-tel-input": "^9.2.0",
     "vuedraggable": "^4.1.0"
   },
   "devDependencies": {

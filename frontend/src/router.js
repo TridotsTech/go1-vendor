@@ -16,7 +16,7 @@ const routes = [
  
   {
     name: 'Dashboard',
-    path: '/Dashboard',
+    path: '/dashboard',
     component: () => import('@/pages/main.vue'),
     props:true,
     meta: { requiresAuth: true },
@@ -28,12 +28,12 @@ const routes = [
   },
  
     {
-      path: '/RequestQuotation',
-      name:'RequestQuotation',
-      component:() => import ('@/pages/RequestQuotation.vue')
+      path: '/request-for-quotation',
+      name:'RequestForQuotation',
+      component:() => import ('@/pages/RequestForQuotation.vue')
     },
     {
-      path: '/Request-Quotation-Details/:id',
+      path: '/request-for-quotation/:id',
       name:'Request Quotation Details',
       component:() => import ('@/pages/RequestQuotationDetails.vue'),
       props:{
@@ -42,63 +42,73 @@ const routes = [
     },
     {
       name: 'Supplier',
-      path: '/Supplier',
+      path: '/supplier-quotation',
       component: () => import('@/pages/SupplierQuotation.vue'),
     },
     {
       name: 'Supplier Detail',
-      path: '/Supplier-Detail/:id',
+      path: '/supplier-quotation/:id',
       component: () => import('@/pages/Supplier Detail.vue'),
     },
     {
-      path: '/Purchase',
+      path: '/purchase-order',
       name:'Purchase',
       component:() => import ('@/pages/Purchase.vue')
     },
     {
-      path: '/Purchase-Detail/:id',
+      path: '/purchase-order/:id',
       name:'Purchase Detail',
       component:() => import ('@/pages/Purchase Detail.vue')
     },
     {
       name: 'PurchaseInvoice',
-      path: '/SupplierInvoice',
+      path: '/supplier-invoice',
       component: () => import('@/pages/PurchaseInvoice.vue'),
     },
     {
       name: 'Supplier Invoice Details',
-      path: '/Supplier-Invoice-Details/:id',
+      path: '/supplier-invoice/:id',
       component: () => import('@/pages/Purchase Invoice Details.vue'),
     },
     {
-      path: '/IssuesList',
+      path: '/issues',
       name:'IssuesList',
       component:() => import ('@/pages/IssuesList.vue')
     },
     {
-      path: '/Issues',
+      path: '/issues',
       name:'Issues',
       component:() => import ('@/pages/Issues.vue')
     },
     {
-      path: '/Issues-Detail/:id',
+      path: '/issues/:id',
       name:'Issues Detail',
       component:() => import ('@/pages/Issues Detail.vue')
     },
     {
-      path: '/Addresses',
+      path: '/addresses',
       name:'Addresses',
       component:() => import ('@/pages/Addresses.vue')
     },
     {
-      path: '/Addresses-Detail/:id',
+      path: '/addresses/:id',
       name:'Addresses Detail',
       component:() => import ('@/pages/Addresses Detail.vue')
     },
     {
-      path: '/New-Addresses',
+      path: '/new-Addresses',
       name:'New Addresses',
       component:() => import ('@/pages/New Addresses.vue')
+    },
+    {
+      path: '/test',
+      name:'test',
+      component:() => import ('@/pages/test.vue')
+    },
+    {
+      path: '/Signup',
+      name:'Signup',
+      component:() => import ('@/pages/Signup.vue')
     },
 ]
 

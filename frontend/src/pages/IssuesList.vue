@@ -5,7 +5,26 @@
       </div>
       <div class="flex-1 flex flex-col h-full">
         <div class="h-full w-full flex flex-col">
-         <AppHeader >
+        <div class=" mb-2 border-b p-4 flex justify-between">
+          <div>
+      <span>Issues</span>
+      </div>
+      <div class="justify-between">
+      <Button
+              variant="solid"
+              theme="gray"
+              size="sm"
+              label="Button"
+              :loading="false"
+              :loadingText="null"
+              :disabled="false"
+              @click="openCreate"
+            >
+              + Create
+            </Button>
+            </div>
+    </div>
+         <!-- <AppHeader >
           <template #createbutton>
             <Button
               variant="solid"
@@ -20,8 +39,8 @@
               + Create
             </Button>
           </template>
-          </AppHeader>
-        <slot />
+          </AppHeader> -->
+        <!-- <slot /> -->
         <!-- Passing dynamic 'id' to the handleButtonClick function -->
         <!-- <button class="border" @click="handleButtonClick()">Click</button> -->
   
@@ -104,7 +123,7 @@
   
   <script setup>
   import AppSidebar from '@/components/Layouts/AppSidebar.vue';
-  import AppHeader from '@/components/Layouts/AppHeader.vue';
+  // import AppHeader from '@/components/Layouts/AppHeader.vue';
   import { useRouter } from 'vue-router';
   import { Button, createResource,ListView,ListFooter, Select, DatePicker, FormControl, Badge, } from 'frappe-ui';
   import { ref, onMounted, watch, reactive } from 'vue';
@@ -114,6 +133,7 @@
   const filter_data=ref([])
   const field_filters = reactive({});
   const pageLengthCount = ref(20);
+  const priorityoption =ref([])
   
   const supplier_detail = createResource({
    url: 'go1_vendor.apidata.get_issues',
@@ -224,6 +244,7 @@
   };
   
   const getComponentProps = (fieldData) => {
+    
     const props = {
       Select: {
         options: getOptions(fieldData.options),
@@ -232,7 +253,9 @@
       Link: {
         size: "sm",
         variant: "subtle",
+        type: "select",
         placeholder: fieldData.label,
+        options: priorityoption.value
       },
       Date: {
         size: "sm",
@@ -258,9 +281,23 @@
       value: option,
     }));
   };
+
+  const createSupplier = async () => {
+  try {
+    const response = await fetch('/api/resource/Issue Priority?fields=["name"]');
+    if (!response.ok) throw new Error('Network response was not ok');
+
+    const prioritydata = await response.json();
+    priorityoption.value = prioritydata.data.map((user) => user.name) || [];
+   
+  } catch (error) {
+    console.error('Error fetching priorities:', error);
+  }
+  };
   
   
-  onMounted(() => {
+  onMounted(async() => {
+  await createSupplier();
   fetchOrder();
   supplier_detail.fetch();
   });

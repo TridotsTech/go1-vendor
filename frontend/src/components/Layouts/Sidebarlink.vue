@@ -3,7 +3,7 @@
     <div v-if="dynamicsApp_data.data && dynamicsApp_data.data.length" class="grid grid-cols-1 gap-0.5">
         
         <div v-for="(row, index) in dynamicsApp_data.data" :key="index">
-            <Button @click="handleButtonClick(row.route)" :variant="'ghost'" theme="gray" class="w-full justify-start text-gray-800 bg-white">
+            <Button @click="handleButtonClick(row.route) " :variant="'ghost'" theme="gray" class="w-full justify-start text-gray-800 bg-white">
                 <!-- Collapsed View Icon -->
                 <template v-if="isCollapsed">
                     <FeatherIcon class="w-4 text-black" stroke="black" :stroke-width="1" :name="row.icon" />

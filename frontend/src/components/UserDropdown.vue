@@ -25,7 +25,6 @@
                         <span v-else>
                             {{ __('Administrator') }}
                         </span>
-                        
                     </div>
                 </div>
                 <div class="duration-300 ease-in-out" :class="isCollapsed
@@ -37,7 +36,6 @@
             </button>
         </template>
     </Dropdown>
- 
 </template>
  
 <script setup>
@@ -46,7 +44,6 @@ import GO1Logo from '@/components/Icons/GO1Logo.vue'
 import { Dropdown,FeatherIcon,createResource } from 'frappe-ui'
 import { computed, ref, markRaw } from 'vue'
 import { session } from '@/data/session';
-
 
 const props = defineProps({
   isCollapsed: {
@@ -64,8 +61,7 @@ const users = createResource({
 users.fetch();
 const logged_users = users;
 
-
- 
+console.log('user',logged_users) 
  
 const sessionCheck = () => {
     if (session?.logout?.submit) {
