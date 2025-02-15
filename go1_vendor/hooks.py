@@ -246,9 +246,7 @@ fixtures = [
 	{
 		"doctype":"Custom Field",
 		"filters":{"module":"Go1 Vendor"}	
-	},
-    {
-		"doctype":"Supplier Registration",
 	}
+
 ]
 website_route_rules = [{'from_route': '/go1_vendor/<path:app_path>', 'to_route': 'go1_vendor'},]
